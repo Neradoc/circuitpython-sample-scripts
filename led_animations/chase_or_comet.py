@@ -29,9 +29,12 @@ anim = 0
 
 while True:
 	anims[anim].animate()
+	# lookup buttons to switch between animations
 	if not button.value:
 		anim = (anim + 1) % len(anims)
 		# wait for button release
 		while not button.value:
 			time.sleep(0.1)
-	time.sleep(0.01)
+	# wait a bit, but not too long to read buttons
+	time.sleep(min(0.2, anim.speed / 20))
+

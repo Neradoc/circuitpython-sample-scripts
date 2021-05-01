@@ -17,7 +17,7 @@ from adafruit_led_animation.color import AMBER, JADE
 chase = Chase(cp.pixels, speed=0.06, size=3, spacing=6, color=AMBER)
 comet = Comet(cp.pixels, speed=0.02, color=JADE, tail_length=10, bounce=True)
 
-anim = chase
+anim = comet
 
 while True:
 	anim.animate()
@@ -33,5 +33,5 @@ while True:
 		cp.pixels.brightness = 0.2
 	else:
 		cp.pixels.brightness = 0.8
-	# animation is fast, so no sleep
-	# time.sleep(0.01)
+	# wait a bit, but not too long to read buttons
+	time.sleep(min(0.2, anim.speed / 20))
