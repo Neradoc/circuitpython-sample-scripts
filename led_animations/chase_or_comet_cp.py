@@ -28,5 +28,5 @@ while True:
 		cp.pixels.brightness = 0.2
 	else:
 		cp.pixels.brightness = 0.8
-	# wait a bit, but not too long to read buttons
-	time.sleep(min(0.2, anim.speed / 20))
+	# for slow animations, sleep a bit, but not too long to read buttons
+	# time.sleep(min(0.1, anim.speed / 10))

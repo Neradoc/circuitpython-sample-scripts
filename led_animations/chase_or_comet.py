@@ -34,7 +34,9 @@ while True:
 		anim = (anim + 1) % len(anims)
 		# wait for button release
 		while not button.value:
-			time.sleep(0.1)
-	# wait a bit, but not too long to read buttons
-	time.sleep(min(0.2, anim.speed / 20))
+			pass
+		# little debounce
+		time.sleep(0.1)
+	# for slow animations, sleep a bit, but not too long to read buttons
+	# time.sleep(min(0.1, anim.speed / 10))
 
