@@ -6,9 +6,9 @@ keep_pins = {}
 # the status LED (can be deinited from the outside or here)
 pixels = None
 
-def get_status_led(npixels = None):
+def get_status_led(npixels = None, *, brightness = None):
 	"""
-	Can force the number of pixels used (to 1 for example)
+	Can force the number of pixels used (to 1 for example on the pybadge LC)
 	"""
 	machine = os.uname().machine
 	global pixels
@@ -72,3 +72,20 @@ def get_status_led(npixels = None):
 		pixels.brightness = brightness
 
 	return pixels
+
+
+def deinit_status_led():
+	"""
+	deinits the status pixels, be careful not to use it after that
+	reverses and deinits the enable pins
+	"""
+	global pixels
+	if pixels is not None:
+		pixels.deinit()
+		pixels = None
+
+	for pin in keep_pins:
+		pin.value = not pin.value
+		if hasattr(board,'LDO2'):
+			time.sleep(0.035)
+		pin.deinit()
