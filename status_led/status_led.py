@@ -8,8 +8,9 @@ def get_status_led(npixels = None):
 	"""
 	Can force the number of pixels used (to 1 for example)
 	"""
+	machine = os.uname().machine
+
 	if npixels is None:
-		machine = os.uname().machine
 		npixels = 1
 		if "CircuitPlayground" in machine:
 			npixels = 10
@@ -17,7 +18,8 @@ def get_status_led(npixels = None):
 			npixels = 4
 		elif "MagTag" in machine:
 			npixels = 4
-
+		elif "FunHouse" in machine or "FunHome" in machine:
+			npixels = 5
 
 	if hasattr(board,"NEOPIXEL"):
 		"""
@@ -31,12 +33,12 @@ def get_status_led(npixels = None):
 		"""
 		import adafruit_dotstar
 		pixels = adafruit_dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, npixels)
-	elif hasattr(board,"DOTSTAR_SCK"):
+	elif hasattr(board,"DOTSTAR_CLOCK"):
 		"""
-		For a board that has DOTSTAR pins
+		For a board that has DOTSTAR pins (eg: FunHouse)
 		"""
 		import adafruit_dotstar
-		pixels = adafruit_dotstar.DotStar(board.DOTSTAR_SCK, board.DOTSTAR_MOSI, npixels, auto_write=True)
+		pixels = adafruit_dotstar.DotStar(board.DOTSTAR_CLOCK, board.DOTSTAR_DATA, npixels)
 	else:
 		raise OSError("No hardware pixel identified")
 
