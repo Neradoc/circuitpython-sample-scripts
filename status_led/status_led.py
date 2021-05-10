@@ -2,13 +2,16 @@ import board
 import os
 
 # keep these pins, so they don't get freed
-_keep = {}
+keep_pins = {}
+# the status LED (can be deinited from the outside or here)
+pixels = None
 
 def get_status_led(npixels = None):
 	"""
 	Can force the number of pixels used (to 1 for example)
 	"""
 	machine = os.uname().machine
+	global pixels
 
 	if npixels is None:
 		npixels = 1
@@ -51,7 +54,8 @@ def get_status_led(npixels = None):
 		ldo2 = DigitalInOut(board.LDO2)
 		ldo2.switch_to_output()
 		ldo2.value = True
-		_keep["ldo2"] = ldo2
+		keep_pins["ldo2"] = ldo2
+		time.sleep(0.035)
 
 
 	if hasattr(board,"NEOPIXEL_POWER"):
@@ -62,6 +66,9 @@ def get_status_led(npixels = None):
 		neopower = DigitalInOut(board.NEOPIXEL_POWER)
 		neopower.switch_to_output()
 		neopower.value = False
-		_keep["neopower"] = neopower
+		keep_pins["neopower"] = neopower
+
+	if brightness is not None:
+		pixels.brightness = brightness
 
 	return pixels
