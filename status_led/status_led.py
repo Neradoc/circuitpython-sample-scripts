@@ -1,5 +1,6 @@
 import board
 import os
+import time
 
 # keep these pins, so they don't get freed
 keep_pins = {}
@@ -11,38 +12,36 @@ def get_npixels():
 	Find the number of pixels based on hand-filled board information
 	"""
 	machine = os.uname().machine
-	if npixels is None:
-		npixels = 1
-		npixels_by_machine = {
-			"Adafruit MagTag with ESP32S2": 4,
-			"Adafruit CircuitPlayground Express with samd21g18": 10,
-			"Adafruit Circuit Playground Bluefruit with nRF52840": 10,
-			"Adafruit PyGamer with samd51j19": 5,
-			"Adafruit PyGamer with samd51j20": 5,
-			"Adafruit Pybadge with samd51j19": 5,
-			"Adafruit FunHouse with ESP32S2": 5,
-			"Adafruit NeoPixel Trinkey M0 with samd21e18": 4,
-			"Adafruit Trellis M4 Express with samd51g19": 4*8,
-		}
-		npixels_by_name = {
-			"Adafruit NeoPixel Trinkey": 4,
-			"Adafruit FunHouse": 5,
-			"Adafruit FunHome": 5, # alternate name for FunHouse (bug)
-			"Adafruit PyGamer": 5,
-			"Adafruit PyBadge": 5,
-			"Adafruit CircuitPlayground": 10, # catch all variants (crickit, displayio)
-		}
+	npixels_by_machine = {
+		"Adafruit MagTag with ESP32S2": 4,
+		"Adafruit CircuitPlayground Express with samd21g18": 10,
+		"Adafruit Circuit Playground Bluefruit with nRF52840": 10,
+		"Adafruit PyGamer with samd51j19": 5,
+		"Adafruit PyGamer with samd51j20": 5,
+		"Adafruit Pybadge with samd51j19": 5,
+		"Adafruit FunHouse with ESP32S2": 5,
+		"Adafruit NeoPixel Trinkey M0 with samd21e18": 4,
+		"Adafruit Trellis M4 Express with samd51g19": 4*8,
+	}
+	npixels_by_name = {
+		"Adafruit NeoPixel Trinkey": 4,
+		"Adafruit FunHouse": 5,
+		"Adafruit FunHome": 5, # alternate name for FunHouse (bug)
+		"Adafruit PyGamer": 5,
+		"Adafruit PyBadge": 5,
+		"Adafruit CircuitPlayground": 10, # catch all variants (crickit, displayio)
+	}
 
-		# find by fill machine description
-		if machine in npixels_by_machine:
-			return npixels_by_machine[machine]
+	# find by fill machine description
+	if machine in npixels_by_machine:
+		return npixels_by_machine[machine]
 
-		# fallback to search in name
-		for name in npixels_by_name:
-			if name in machine:
-				return npixels_by_name[name]
+	# fallback to search in name
+	for name in npixels_by_name:
+		if name in machine:
+			return npixels_by_name[name]
 
-		return 1
+	return 1
 
 
 def get_status_led(npixels = None, *, brightness = None):
