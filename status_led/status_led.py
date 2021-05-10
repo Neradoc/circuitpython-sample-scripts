@@ -6,23 +6,53 @@ keep_pins = {}
 # the status LED (can be deinited from the outside or here)
 pixels = None
 
+def get_npixels():
+	"""
+	Find the number of pixels based on hand-filled board information
+	"""
+	machine = os.uname().machine
+	if npixels is None:
+		npixels = 1
+		npixels_by_machine = {
+			"Adafruit MagTag with ESP32S2": 4,
+			"Adafruit CircuitPlayground Express with samd21g18": 10,
+			"Adafruit Circuit Playground Bluefruit with nRF52840": 10,
+			"Adafruit PyGamer with samd51j19": 5,
+			"Adafruit PyGamer with samd51j20": 5,
+			"Adafruit Pybadge with samd51j19": 5,
+			"Adafruit FunHouse with ESP32S2": 5,
+			"Adafruit NeoPixel Trinkey M0 with samd21e18": 4,
+			"Adafruit Trellis M4 Express with samd51g19": 4*8,
+		}
+		npixels_by_name = {
+			"Adafruit NeoPixel Trinkey": 4,
+			"Adafruit FunHouse": 5,
+			"Adafruit FunHome": 5, # alternate name for FunHouse (bug)
+			"Adafruit PyGamer": 5,
+			"Adafruit PyBadge": 5,
+			"Adafruit CircuitPlayground": 10, # catch all variants (crickit, displayio)
+		}
+
+		# find by fill machine description
+		if machine in npixels_by_machine:
+			return npixels_by_machine[machine]
+
+		# fallback to search in name
+		for name in npixels_by_name:
+			if name in machine:
+				return npixels_by_name[name]
+
+		return 1
+
+
 def get_status_led(npixels = None, *, brightness = None):
 	"""
 	Can force the number of pixels used (to 1 for example on the pybadge LC)
 	"""
-	machine = os.uname().machine
 	global pixels
 
 	if npixels is None:
-		npixels = 1
-		if "CircuitPlayground" in machine:
-			npixels = 10
-		elif "NeoPixel Trinkey" in machine:
-			npixels = 4
-		elif "MagTag" in machine:
-			npixels = 4
-		elif "FunHouse" in machine or "FunHome" in machine:
-			npixels = 5
+		npixels = get_npixels()
 
 	if hasattr(board,"NEOPIXEL"):
 		"""
