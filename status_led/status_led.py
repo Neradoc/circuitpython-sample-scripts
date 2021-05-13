@@ -79,7 +79,7 @@ def get_status_led(npixels = None, *, brightness = None):
 		"""
 		Enable LDO2 on the Feather S2 so we can use the status LED
 		"""
-		from digitalio import DigitalInOut, Direction
+		from digitalio import DigitalInOut
 		ldo2 = DigitalInOut(board.LDO2)
 		ldo2.switch_to_output()
 		ldo2.value = True
@@ -89,13 +89,21 @@ def get_status_led(npixels = None, *, brightness = None):
 
 	if hasattr(board,"NEOPIXEL_POWER"):
 		"""
-		On the MagTag, bring down NEOPIXEL_POWER
+		Some boards have a NEOPIXEL_POWER pin
 		"""
-		from digitalio import DigitalInOut, Direction
+		from digitalio import DigitalInOut
 		neopower = DigitalInOut(board.NEOPIXEL_POWER)
 		neopower.switch_to_output()
-		neopower.value = False
 		keep_pins["neopower"] = neopower
+		if "MagTag" in machine:
+			# On MagTag, pull it down
+			neopower.value = False
+		elif "TinyS2" in machine:
+			# On TinyS2, pull it up
+			neopower.value = True
+		else:
+			# Assume up by default maybe ?
+			neopower.value = True
 
 	if brightness is not None:
 		pixels.brightness = brightness
