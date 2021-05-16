@@ -1,3 +1,13 @@
+"""
+This uses the optional second serial port available in Circuitpython 7.x
+Activate it in the boot.py file with the following code
+
+import usb_cdc
+usb_cdc.enable(console=True, data=True)
+
+Some boards might require disabling USB endpoints to enable the data port.
+"""
+
 import board
 import digitalio
 import json
