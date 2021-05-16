@@ -87,22 +87,37 @@ async def read_serial():
 
 
 async def read_color():
-    color = await ainput("> ")
-    color = color.strip()
-    if re.match("^\((\d+),(\d+),(\d+)\)$", color):
-        m = re.match("^\((\d+),(\d+),(\d+)\)$", color)
-        color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-    elif re.match("^\[(\d+),(\d+),(\d+)\]$", color):
-        m = re.match("^\[(\d+),(\d+),(\d+)\]$", color)
-        color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-    elif re.match("^(\d+),(\d+),(\d+)$", color):
-        m = re.match("^\[(\d+),(\d+),(\d+)\]$", color)
-        color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-    elif color.lower() in color_names:
-        color = color_names[color.lower()]
-    else:
-        return None
-    return json.dumps({"color": color})
+    """
+    Multiple formats for a color to send to the neopixel
+    "blink" makes the monochrome LED blink
+    Send multiple commands in one go with ":"
+    eg: "blink:blink:blink"
+    """
+    data_out = []
+    data_in = await ainput("> ")
+    data_in = data_in.strip()
+    for data_val in data_in.split(":"):
+        color = None
+        if re.match("^\((\d+),(\d+),(\d+)\)$", data_val):
+            m = re.match("^\((\d+),(\d+),(\d+)\)$", data_val)
+            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        elif re.match("^\[(\d+),(\d+),(\d+)\]$", data_val):
+            m = re.match("^\[(\d+),(\d+),(\d+)\]$", data_val)
+            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        elif re.match("^(\d+),(\d+),(\d+)$", data_val):
+            m = re.match("^\[(\d+),(\d+),(\d+)\]$", data_val)
+            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        elif data_val.lower() in color_names:
+            color = color_names[data_val.lower()]
+        elif data_val == "blink":
+            data_out.append(json.dumps({"blink":1}))
+        else:
+            pass
+        if color:
+            data_out.append(json.dumps({"color": color}))
+    if data_out:
+        return "\r\n".join(data_out)
+    return None
 
 
 async def send_serial():
