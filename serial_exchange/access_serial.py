@@ -28,7 +28,7 @@ color_names = {
     "yellow": (255, 255, 0),
 }
 
-print("Enter a color in the format: rrr,ggg,bbb")
+print("Enter a color in the format: (rrr,ggg,bbb)")
 print("Example: (255,125,0) is orange")
 print(" ".join([name for name in color_names]))
 
@@ -73,15 +73,17 @@ async def read_serial():
             try:
                 data = json.loads(line.decode("utf8"))
             except:
-                print(">", line.decode("utf8"))
+                data = {"raw": line.decode("utf8")}
 
+        # receive button information and print it out
         if "buttons" in data:
             for button in data["buttons"]:
                 if button["status"] == "RELEASED":
                     print(f"Button {button['id']} clicked")
 
-        if "color_set" in data:
-            print(f"Color changed to {data['color_set']}")
+        # unidentified data sent by the board, helps with testing
+        if "raw" in data:
+            print(f"Board sent: {data['raw']}")
 
         await asyncio.sleep(0.1)
 
@@ -89,34 +91,32 @@ async def read_serial():
 async def read_color():
     """
     Multiple formats for a color to send to the neopixel
-    "blink" makes the monochrome LED blink
-    Send multiple commands in one go with ":"
-    eg: "blink:blink:blink"
+    "blink" makes the monochrome LED blink once
     """
     data_out = []
     data_in = await ainput("> ")
     data_in = data_in.strip()
-    for data_val in data_in.split(":"):
-        color = None
-        if re.match("^\((\d+),(\d+),(\d+)\)$", data_val):
-            m = re.match("^\((\d+),(\d+),(\d+)\)$", data_val)
-            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-        elif re.match("^\[(\d+),(\d+),(\d+)\]$", data_val):
-            m = re.match("^\[(\d+),(\d+),(\d+)\]$", data_val)
-            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-        elif re.match("^(\d+),(\d+),(\d+)$", data_val):
-            m = re.match("^(\d+),(\d+),(\d+)$", data_val)
-            color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
-        elif data_val.lower() in color_names:
-            color = color_names[data_val.lower()]
-        elif data_val == "blink":
-            data_out.append(json.dumps({"blink":1}))
-        else:
-            data_out.append(json.dumps({"raw": data_val}))
-        if color:
-            data_out.append(json.dumps({"color": color}))
-    if data_out:
-        return "\r\n".join(data_out)
+
+    if re.match("^\((\d+),(\d+),(\d+)\)$", data_in):
+        # color formatted as (rrr,ggg,bbb)
+        m = re.match("^\((\d+),(\d+),(\d+)\)$", data_in)
+        color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        return json.dumps({"color": color})
+
+    elif data_in.lower() in color_names:
+        # color name for simple tests
+        color = color_names[data_in.lower()]
+        return json.dumps({"color": color})
+
+    elif data_in == "blink":
+        # simple blink command
+        return json.dumps({"blink":1})
+
+    else:
+        # send anything anyway, helps testing the board side code
+        return json.dumps({"raw": data_in})
+
+    # should not be reached
     return "\r\n"
 
 
