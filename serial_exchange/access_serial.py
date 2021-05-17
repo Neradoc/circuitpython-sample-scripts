@@ -105,19 +105,19 @@ async def read_color():
             m = re.match("^\[(\d+),(\d+),(\d+)\]$", data_val)
             color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
         elif re.match("^(\d+),(\d+),(\d+)$", data_val):
-            m = re.match("^\[(\d+),(\d+),(\d+)\]$", data_val)
+            m = re.match("^(\d+),(\d+),(\d+)$", data_val)
             color = (int(m.group(1)), int(m.group(2)), int(m.group(3)))
         elif data_val.lower() in color_names:
             color = color_names[data_val.lower()]
         elif data_val == "blink":
             data_out.append(json.dumps({"blink":1}))
         else:
-            pass
+            data_out.append(json.dumps({"raw": data_val}))
         if color:
             data_out.append(json.dumps({"color": color}))
     if data_out:
         return "\r\n".join(data_out)
-    return None
+    return "\r\n"
 
 
 async def send_serial():
