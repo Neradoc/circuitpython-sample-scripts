@@ -16,10 +16,13 @@ if hasattr(board,"NEOPIXEL"):
     pix.fill((32, 16, 0))
 
 led = None
-if hasattr(board,"LED"):
-    led = digitalio.DigitalInOut(board.LED)
-    led.switch_to_output()
-    led.value = False
+for ledname in ["LED","L","RED_LED","BLUE_LED"]:
+    if hasattr(board,ledname):
+        led = digitalio.DigitalInOut(getattr(board,ledname))
+        led.switch_to_output()
+        led.value = False
+        print(ledname)
+        break
 
 ################################################################
 # init board's button for acknowledging user interaction
@@ -61,6 +64,7 @@ if button:
 ################################################################
 
 while True:
+    # add to that dictionary to send the data at the end of the loop
     data_out = {}
 
     # read the secondary serial line by line
@@ -74,14 +78,17 @@ while True:
             try:
                 data = json.loads(data_in)
             except:
-                data = {"raw": data_in}
+                data = {"raw": data_in.decode()}
 
         # interpret 
         if isinstance(data,dict):
+
+            # change the color of the neopixel
             if "color" in data and pix is not None:
                 pix.fill(data["color"])
+            
+            # blinking without sleep is left as an exercise
             if "blink" in data and led is not None:
-                # blinking without sleep is left as an exercise
                 led.value = True
                 time.sleep(0.25)
                 led.value = False
@@ -94,6 +101,8 @@ while True:
             data_out["buttons"] = [{"status": "PRESSED", "id": button_id}]
         else:
             data_out["buttons"] = [{"status": "RELEASED", "id": button_id}]
+
+    # send the data out once everything to be sent is gathered
     if data_out:
         print(json.dumps(data_out))
 
