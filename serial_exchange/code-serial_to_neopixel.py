@@ -65,7 +65,7 @@ while True:
 
     # read the secondary serial line by line
     # when there's data, with a timeout
-    if supervisor.runtime.serial_bytes_available > 0:
+    if supervisor.runtime.serial_bytes_available:
         data_in = input()
 
         # try to convert the data to a dict (with JSON)
