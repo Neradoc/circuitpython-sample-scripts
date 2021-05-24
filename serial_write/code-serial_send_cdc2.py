@@ -1,4 +1,7 @@
 """
+Read the REPL to receive color data for the neopixel.
+
+
 This uses the optional second serial port available in Circuitpython 7.x
 Activate it in the boot.py file with the following code
 
@@ -20,8 +23,9 @@ import usb_cdc
 ################################################################
 
 pix = None
-if hasattr(board,"NEOPIXEL"):
+if hasattr(board, "NEOPIXEL"):
     import neopixel
+
     pix = neopixel.NeoPixel(board.NEOPIXEL, 1)
     pix.fill((32, 16, 0))
 
@@ -43,8 +47,8 @@ while True:
             except:
                 data = {"raw": data_in.decode()}
 
-        # interpret 
-        if isinstance(data,dict):
+        # interpret
+        if isinstance(data, dict):
 
             # change the color of the neopixel
             if "color" in data and pix is not None:

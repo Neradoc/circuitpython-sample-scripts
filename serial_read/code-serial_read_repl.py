@@ -1,9 +1,12 @@
+"""
+Print a number to the REPL.
+Format that can be read by the Mu grapher.
+Using CPU temperature as a sample data.
+"""
+import json
 import microcontroller
 import time
 import random
-
-
-past_temp = 20
 
 
 def generate_some_data():
@@ -11,14 +14,13 @@ def generate_some_data():
     dummy data, replace that by reading a sensor
     or buttons, or whatever
     """
-    try:  # CPY temperature
+    try:  # CPU temperature
         return microcontroller.cpu.temperature
     except:
         pass
-    # dummy data
-    global past_temp
+    # dummy data if temperature not available
     past_temp = past_temp + random.random() - 0.5
-    return past_temp
+    return random.randint(2000, 2500) / 100
 
 
 while True:

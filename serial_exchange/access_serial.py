@@ -1,3 +1,8 @@
+"""
+This script connects to the provided serial port.
+It sends color commands or other commands as a dictionary encoded in json.
+It receives button press from the serial port and displays what it gets.
+"""
 import argparse
 import json
 import math
@@ -34,6 +39,9 @@ print(" ".join([name for name in color_names]))
 
 
 def setup_serial():
+    """
+    Helper to connect and reconnet to the serial channel
+    """
     global channel
     if channel is None:
         try:
@@ -46,6 +54,9 @@ def setup_serial():
 
 
 def error_serial():
+    """
+    Helper to handle serial errors
+    """
     global channel
     if channel != None:
         channel.close()
@@ -54,6 +65,9 @@ def error_serial():
 
 
 async def read_serial():
+    """
+    Loop reading the serial IN and trea the message with a print
+    """
     print("read_serial")
     while True:
         setup_serial()
@@ -90,7 +104,8 @@ async def read_serial():
 
 async def read_color():
     """
-    Multiple formats for a color to send to the neopixel
+    Single format for a color to send to the neopixel
+    A color name sends that color to the neopixel
     "blink" makes the monochrome LED blink once
     """
     data_out = []
@@ -110,7 +125,7 @@ async def read_color():
 
     elif data_in == "blink":
         # simple blink command
-        return json.dumps({"blink":1})
+        return json.dumps({"blink": 1})
 
     else:
         # send anything anyway, helps testing the board side code
@@ -121,6 +136,9 @@ async def read_color():
 
 
 async def send_serial():
+    """
+    Loop on a data provider (here a user prompt) and send the data.
+    """
     print("send_serial")
     while True:
         setup_serial()

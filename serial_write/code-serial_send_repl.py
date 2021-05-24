@@ -1,3 +1,6 @@
+"""
+Read the REPL to receive color data for the neopixel.
+"""
 import board
 import json
 import time
@@ -9,8 +12,9 @@ import supervisor
 ################################################################
 
 pix = None
-if hasattr(board,"NEOPIXEL"):
+if hasattr(board, "NEOPIXEL"):
     import neopixel
+
     pix = neopixel.NeoPixel(board.NEOPIXEL, 1)
     pix.fill((32, 16, 0))
 
@@ -19,9 +23,6 @@ if hasattr(board,"NEOPIXEL"):
 ################################################################
 
 while True:
-    # add to that dictionary to send the data at the end of the loop
-    data_out = {}
-
     # read the secondary serial line by line
     # when there's data, with a timeout
     if supervisor.runtime.serial_bytes_available:
@@ -35,8 +36,8 @@ while True:
             except:
                 data = {"raw": data_in.decode()}
 
-        # interpret 
-        if isinstance(data,dict):
+        # interpret
+        if isinstance(data, dict):
 
             # change the color of the neopixel
             if "color" in data and pix is not None:

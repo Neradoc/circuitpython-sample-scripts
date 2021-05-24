@@ -1,4 +1,9 @@
 """
+Print a number to the REPL.
+Format that can be read by the Mu grapher.
+Using CPU temperature as a sample data.
+
+
 This uses the optional second serial port available in Circuitpython 7.x
 Activate it in the boot.py file with the following code
 
@@ -14,22 +19,18 @@ import random
 import usb_cdc
 
 
-past_temp = 20
-
-
 def generate_some_data():
     """
     dummy data, replace that by reading a sensor
     or buttons, or whatever
     """
-    try:  # CPY temperature
+    try:  # CPU temperature
         return microcontroller.cpu.temperature
     except:
         pass
-    # dummy data
-    global past_temp
+    # dummy data if temperature not available
     past_temp = past_temp + random.random() - 0.5
-    return past_temp
+    return random.randint(2000, 2500) / 100
 
 
 while True:

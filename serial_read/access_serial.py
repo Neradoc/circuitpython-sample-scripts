@@ -1,5 +1,6 @@
 """
-a simple, string based (no json), serial read
+A simple, string based (no json), serial read.
+Reads the data and interprets it as a float reprensenting the temperature.
 """
 import argparse
 import re
@@ -24,9 +25,14 @@ while True:
     # NOTE: does not catch serial errors
 
     if line:
-        m = re.match(r"\((\d+(\.\d+)?)\)", line.decode("utf8"))
-        if m:
-            temperature = float(m.group(1))
+        try:
+            # remove the parenthesis
+            m = line.decode("utf8")[1:-1]
+            temperature = float(m)
             print(f"Temperature: {temperature:.2f}°C")
+        except ValueError:
+            # ignore an error if float() fails
+            # (with the REPL, you get board reload messages and such)
+            pass
 
     time.sleep(0.1)

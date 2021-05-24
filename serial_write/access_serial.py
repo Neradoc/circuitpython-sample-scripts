@@ -1,9 +1,9 @@
 """
-a simple, json based, serial write
+A simple, json based, serial write.
+Loops on a color wheel to send color info to the board.
 """
 import argparse
 import json
-import re
 import serial
 import time
 
@@ -34,7 +34,7 @@ while True:
         color = wheel((x * 8) % 256)
 
         print(color)
-        channel.write(json.dumps({ "color": color }).encode())
+        channel.write(json.dumps({"color": color}).encode())
         channel.write(b"\r\n")
 
         time.sleep(0.2)
