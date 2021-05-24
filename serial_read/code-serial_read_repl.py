@@ -1,3 +1,4 @@
+import microcontroller
 import time
 import random
 
@@ -10,6 +11,11 @@ def generate_some_data():
     dummy data, replace that by reading a sensor
     or buttons, or whatever
     """
+    try:  # CPY temperature
+        return microcontroller.cpu.temperature
+    except:
+        pass
+    # dummy data
     global past_temp
     past_temp = past_temp + random.random() - 0.5
     return past_temp
