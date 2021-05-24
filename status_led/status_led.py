@@ -1,3 +1,6 @@
+"""
+A compatibility library to find and enable the on-board RGB LEDs on Circuitpython boards
+"""
 import board
 import os
 import time
