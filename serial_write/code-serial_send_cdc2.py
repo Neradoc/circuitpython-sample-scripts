@@ -1,5 +1,5 @@
 """
-Read the REPL to receive color data for the neopixel.
+Read the Serial port to receive color data for the neopixel.
 
 
 This uses the optional second serial port available in Circuitpython 7.x
