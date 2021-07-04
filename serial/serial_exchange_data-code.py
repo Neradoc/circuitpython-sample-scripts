@@ -28,9 +28,10 @@ import usb_cdc
 pix = None
 if hasattr(board, "NEOPIXEL"):
     import neopixel
-
     pix = neopixel.NeoPixel(board.NEOPIXEL, 1)
     pix.fill((32, 16, 0))
+else:
+    print("This board is not equipped with a Neopixel.")
 
 led = None
 for ledname in ["LED", "L", "RED_LED", "BLUE_LED"]:
@@ -113,8 +114,10 @@ while True:
         if isinstance(data, dict):
 
             # change the color of the neopixel
-            if "color" in data and pix is not None:
-                pix.fill(data["color"])
+            if "color" in data:
+                print(data["color"])
+                if pix is not None:
+                    pix.fill(data["color"])
 
             # blinking without sleep is left as an exercise
             if "blink" in data and led is not None:

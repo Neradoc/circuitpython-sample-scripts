@@ -36,7 +36,10 @@ def generate_some_data():
 while True:
     data_out = {}
     temperature = generate_some_data()
+    temperature_str = f"({temperature})\r\n".encode()
     # prints with () on a solo line to satisfy the Mu grapher
-    usb_cdc.data.write(f"({temperature})\r\n".encode())
+    usb_cdc.data.write(temperature_str)
+    # also print to the REPL channel for debug purposes
+    print(temperature_str)
     # change the sleep time to match your needs
     time.sleep(1)
