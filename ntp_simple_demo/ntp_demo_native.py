@@ -1,3 +1,6 @@
+"""
+Modified from https://gist.github.com/netroy/d1bff654fa58b884d63894ca2c890fc6
+"""
 import board
 import rtc
 import struct
