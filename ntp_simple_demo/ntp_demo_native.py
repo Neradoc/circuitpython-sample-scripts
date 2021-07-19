@@ -19,9 +19,10 @@ NTP_TIME_CORRECTION = 2_208_988_800
 NTP_SERVER = "pool.ntp.org"
 NTP_PORT = 123
 
-SECONDS_TO_YEAR_2000 = time.mktime((2000,1,1,0,0,0,0,0,0))
+SECONDS_TO_YEAR_2000 = time.mktime((2000, 1, 1, 0, 0, 0, 0, 0, 0))
 if SECONDS_TO_YEAR_2000 == 0:
     NTP_TIME_CORRECTION += SECONDS_1970_TO_2000
+
 
 def get_ntp_time(pool):
     packet = bytearray(48)
@@ -40,9 +41,9 @@ def get_ntp_time(pool):
     ntp_localtime_tz = seconds - NTP_TIME_CORRECTION + TZ_OFFSET
     # compensate is there's more than 1s since we retrieved the time
     return time.localtime(
-        ntp_localtime_tz
-        + (time.monotonic_ns() - destination) // 1_000_000_000
+        ntp_localtime_tz + (time.monotonic_ns() - destination) // 1_000_000_000
     )
+
 
 try:
     from secrets import secrets
@@ -73,22 +74,24 @@ if display:
     display.show(group)
     text_area = label.Label(
         terminalio.FONT,
-        scale = 3,
-        color = (255,255,255),
-        max_glyphs = 50,
-        anchor_point = (0.5, 0.5),
-        anchored_position = (
+        scale=3,
+        color=(255, 255, 255),
+        max_glyphs=50,
+        anchor_point=(0.5, 0.5),
+        anchored_position=(
             display.width // 2,
             display.height // 2,
         ),
-        text = "Hello"
+        text="Hello",
     )
     group.append(text_area)
 
 
 while True:
     now = time.localtime()
-    clock = "{hour:02d}:{min:02d}:{seconds:02d}".format(hour = now.tm_hour, min = now.tm_min, seconds = now.tm_sec)
+    clock = "{hour:02d}:{min:02d}:{seconds:02d}".format(
+        hour=now.tm_hour, min=now.tm_min, seconds=now.tm_sec
+    )
     print(clock)
     if display:
         text_area.text = clock
