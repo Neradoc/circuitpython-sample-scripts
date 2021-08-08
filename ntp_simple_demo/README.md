@@ -1,4 +1,4 @@
-These scripts require native wifi (on ESP32-S2 boards) and require the presence of the usual `secrets.py` file used by adafruit libraries, as [explaind in this guide for example](https://learn.adafruit.com/pyportal-titano-weather-station/code-walkthrough-secrets-py).
+These scripts require native wifi (on ESP32-S2 boards) and the presence of the usual `secrets.py` file used by adafruit libraries, as [explained in this guide for example](https://learn.adafruit.com/pyportal-titano-weather-station/code-walkthrough-secrets-py).
 
 ## Simple NTP native demo
 
