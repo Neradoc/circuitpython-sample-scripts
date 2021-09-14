@@ -45,7 +45,7 @@ while True:
         if len(data_in) > 0:
             try:
                 data = json.loads(data_in)
-            except:
+            except ValueError:
                 data = {"raw": data_in.decode()}
 
         # interpret
