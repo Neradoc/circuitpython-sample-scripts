@@ -8,13 +8,13 @@ The default serial channel also hosts the REPL, so you can't communicate through
 
 Since Circuitpython 7, it is possible to enable a second serial channel (some chips might be limited) for binary communication without limitations and without losing the REPL, so you can still see debug prints and errors.
 
-Using the data serial channel requires copying the `boot.py` file.
+Using the data serial channel requires copying the `boot.py` file. The file requires a reset to be active after it's created the first time (it runs whe the board boots).
 
 - [`boot.py`](boot.py)
 
 ## The Serial Ports
 
-The serial ports of your boards are available on your computer, depending on the operating system, `COM*` on Windows, `/dev/tty.usbmodem*` on MacOS, `/dev/ttyACM0` on linux.
+The serial ports of your boards are available on your computer, depending on the operating system, `COM*` on Windows, `/dev/tty.usbmodem*` on MacOS, `/dev/ttyACM0*` on linux.
 
 To help find the serial ports (REPL or data) on the host side, the `find_serial_port.py` script lists the ports per board and per type (if present). It requires the `adafruit_board_toolkit` module.
 ```
@@ -23,11 +23,11 @@ pip3 install adafruit_board_toolkit
 
 - [`find_serial_port.py`](find_serial_port.py)
 
-I also developped a python tool to help gather information on the connected devices called [discotool](https://github.com/Neradoc/discotool). It can be used as a library to find a board and its ports by serial number, drive name, and other criteria (see the examples).
+I also developped a command line python tool to help gather information on the connected devices called [discotool](https://github.com/Neradoc/discotool). It can be used as a library to find a board and its ports by serial number, drive name, and other criteria (see the examples in th discotool repository).
 
 ## The Example Scripts
 
-SOme parts use the json library, not always available on small SAMD21 (M0) boards, due to lack of space, but they can still be used as templates to insert your own code instead.
+Some parts use the json library, not always available on small SAMD21 (M0) boards, due to lack of space, but they can still be used as templates to insert your own code instead.
 
 Each example has 3 files.
 
