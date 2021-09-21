@@ -11,7 +11,7 @@ ds18 = [DS18X20(ow_bus, found) for found in ow_bus.scan()]
 ds18.resolution = 10
 
 # read (request) the temperature every 5 seconds
-TEMPERATURE_DELAY = 0
+TEMPERATURE_DELAY = 5
 
 # time when the next read should occur.
 ds18_next = time.monotonic()
