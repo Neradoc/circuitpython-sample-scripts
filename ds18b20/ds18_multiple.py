@@ -19,14 +19,3 @@ while True:
     print("Temperature: {0:0.3f}C".format(temperature))
     print(tuple(ds.temperature for ds in ds18))
     time.sleep(.1)
-
-"""
-- tuples are immutable arrays, meaning you can't change their fields
-  they are useful to group similar items or simple types that have
-  multiple fields like a color as (red, green, blue) for example,
-  they use parenthesis for their literal representation `(1, 2, 3)`,
-  which in this case matches what Mu expects for drawing whne you print the tuple
-- lists are mutable arrays, meaning you can assign a value with `thing[3] = stuff`,
-  they are useful when you need to change the values or assign them at a later date,
-  they use brackets for their literals `[1 , 2, 3]`
-"""
