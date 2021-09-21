@@ -14,7 +14,6 @@ Some boards might require disabling USB endpoints to enable the data port.
 import board
 import json
 import time
-import supervisor
 import usb_cdc
 
 ################################################################
