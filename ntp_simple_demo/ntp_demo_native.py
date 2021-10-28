@@ -14,15 +14,9 @@ from adafruit_display_text import bitmap_label as label
 # configure your timezone, DST included
 TZ_OFFSET = 3600 * 2
 
-SECONDS_1970_TO_2000 = 946_684_800
 NTP_TIME_CORRECTION = 2_208_988_800
 NTP_SERVER = "pool.ntp.org"
 NTP_PORT = 123
-
-SECONDS_TO_YEAR_2000 = time.mktime((2000, 1, 1, 0, 0, 0, 0, 0, 0))
-if SECONDS_TO_YEAR_2000 == 0:
-    NTP_TIME_CORRECTION += SECONDS_1970_TO_2000
-
 
 def get_ntp_time(pool):
     packet = bytearray(48)
