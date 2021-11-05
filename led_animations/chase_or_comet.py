@@ -8,6 +8,7 @@ import time
 
 from adafruit_led_animation.animation.chase import Chase
 from adafruit_led_animation.animation.comet import Comet
+from adafruit_led_animation.sequence import AnimationSequence
 from adafruit_led_animation.color import AMBER, JADE
 
 # Update to match the pin connected to your NeoPixels
@@ -24,19 +25,15 @@ pixels = neopixel.NeoPixel(pixel_pin, pixel_num, brightness=0.5, auto_write=Fals
 chase = Chase(cp.pixels, speed=0.1, size=3, spacing=6, color=AMBER)
 comet = Comet(cp.pixels, speed=0.02, color=JADE, tail_length=10, bounce=True)
 
-anims = [chase, comet]
-anim = 0
+animations = AnimationSequence(comet, chase)
 
 while True:
-	anims[anim].animate()
+	animations.animate()
 	# lookup buttons to switch between animations
 	if not button.value:
-		anim = (anim + 1) % len(anims)
-		# wait for button release
+		animations.next()
+		# wait for button release (kind of deounce)
 		while not button.value:
-			pass
-		# little debounce
-		time.sleep(0.1)
+			time.sleep(0.01)
 	# for slow animations, sleep a bit, but not too long to read buttons
 	# time.sleep(min(0.1, anim.speed / 10))
-
