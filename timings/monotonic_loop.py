@@ -1,5 +1,9 @@
 """
+Loop with 2 timers, using time.monotonic()
 
+NOTE: time.monotonic() loses precision after many hours of running.
+Prefer using time.monotonic_ns() on boards that support it.
+Since monotonic_ns is in nano seconds, you have to adapt the delays.
 """
 import time
 
@@ -7,10 +11,6 @@ import time
 TIMER_1_DELAY = 5
 # every 2 seconds:
 TIMER_2_DELAY = 2
-
-# NOTE: time.monotonic() loses precision after many hours of running.
-# Prefer using time.monotonic_ns() on boards that support it.
-# Since monotonic_ns is in nano seconds, you have to adapt the delays.
 
 # Change *_next_run to now or 0 if you want to trigger it on the first loop.
 # Or "now + X" to trigger at a different time the first time.
