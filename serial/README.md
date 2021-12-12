@@ -8,9 +8,14 @@ The default serial channel also hosts the REPL, so you can't communicate through
 
 Since Circuitpython 7, it is possible to enable a second serial channel (some chips might be limited) for binary communication without limitations and without losing the REPL, so you can still see debug prints and errors.
 
-Using the data serial channel requires copying the `boot.py` file. The file requires a reset to be active after it's created the first time (it runs whe the board boots).
+Using the data serial channel requires creating a `boot.py` file containing the following code. The file requires a reset to be active after it's created the first time (it runs whe the board boots).
 
 - [`boot.py`](boot.py)
+
+```py
+import usb_cdc
+usb_cdc.enable(data=True)
+```
 
 ## The Serial Ports
 
