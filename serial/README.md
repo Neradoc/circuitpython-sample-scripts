@@ -1,6 +1,6 @@
 ## Serial sample codes
 
-Circuitpython enables communication with the host computer it is connected to via a USB serial port. These examples show how to so it in different basic scenarios on the Circuitpython side and example host-side scripts using python. You can of course use any programming language on the host side.
+Circuitpython enables communication with the host computer it is connected to via a USB serial port. These examples show how to do it in different basic scenarios on the Circuitpython side and example host-side scripts using python. You can of course use any programming language on the host side.
 
 ## The Second Serial Channel
 
