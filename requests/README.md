@@ -1,1 +1,1 @@
-This scripts access wifi and require the presence of the usual `secrets.py` file used by adafruit libraries, as [explained in this guide for example](https://learn.adafruit.com/pyportal-titano-weather-station/code-walkthrough-secrets-py).
+This scripts access wifi and requires the presence of the usual `secrets.py` file used by adafruit libraries, as [explained in this guide for example](https://learn.adafruit.com/pyportal-titano-weather-station/code-walkthrough-secrets-py).
