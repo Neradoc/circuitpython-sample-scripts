@@ -26,8 +26,8 @@ from adafruit_hid.keyboard import Keyboard
 keyboard = Keyboard(usb_hid.devices)
 
 keys_to_press = (
-    (Keycode.ALT, Keycode.TAB),
-    (Keycode.F14,),
+    [Keycode.ALT, Keycode.TAB],
+    [Keycode.F14],
     # etc. each entry matches a button, and has to be a tuple or list
 )
 
