@@ -97,8 +97,7 @@ while True:
     # add to that dictionary to send the data at the end of the loop
     data_out = {}
 
-    # read the secondary serial line by line
-    # when there's data, with a timeout
+    # read the secondary serial line by line when there's data
     if usb_cdc.data.in_waiting > 0:
         data_in = usb_cdc.data.readline()
 

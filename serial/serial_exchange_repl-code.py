@@ -1,5 +1,5 @@
 """
-Listens to the REPL port.
+Listens to the REPL port, without using the usb_cdc module.
 Receives color information and displays it on the NEOPIXEL.
 Receives blink command and blinks once.
 Sends button press and release.
@@ -88,8 +88,7 @@ while True:
     # add to that dictionary to send the data at the end of the loop
     data_out = {}
 
-    # read the secondary serial line by line
-    # when there's data, with a timeout
+    # read the REPL serial line by line when there's data
     if supervisor.runtime.serial_bytes_available:
         data_in = input()
 

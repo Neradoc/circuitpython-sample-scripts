@@ -1,5 +1,6 @@
 """
 Read the REPL to receive color data for the neopixel.
+Not using the usb_cdc module.
 """
 import board
 import json
@@ -24,8 +25,7 @@ else:
 ################################################################
 
 while True:
-    # read the secondary serial line by line
-    # when there's data, with a timeout
+    # read the REPL serial line by line when there's data
     if supervisor.runtime.serial_bytes_available:
         data_in = input()
 
