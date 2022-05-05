@@ -28,7 +28,7 @@ pip3 install adafruit_board_toolkit
 
 - [`find_serial_port.py`](find_serial_port.py)
 
-I also developped a command line python tool to help gather information on the connected devices called [discotool](https://github.com/Neradoc/discotool). It can be used as a library to find a board and its ports by serial number, drive name, and other criteria (see the examples in th discotool repository).
+I also developped a command line python tool to help gather information on the connected devices called [discotool](https://github.com/Neradoc/discotool). It can be used as a library to find a board and its ports by serial number, drive name, and other criteria (see the examples in the discotool repository).
 
 ## The Example Scripts
 
