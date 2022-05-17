@@ -1,5 +1,12 @@
 These scripts require native wifi (on ESP32-S2 boards) and the presence of the usual `secrets.py` file used by adafruit libraries, as [explained in this guide for example](https://learn.adafruit.com/pyportal-titano-weather-station/code-walkthrough-secrets-py).
 
+**NOTE: this sample code is considered obsolete.**
+
+- See the [adafruit_ntp library for native NTP support](https://github.com/adafruit/Adafruit_CircuitPython_NTP).
+- See this [Metro ESP32S2 guide for Adafruit IO](https://learn.adafruit.com/adafruit-metro-esp32-s2/getting-the-date-time).
+
+------------------
+
 ## Simple NTP native demo
 
 This is a simple script that shows download the current time from NTP servers, and displaying a simple clock on the default display if the board has one. Takes into account the value of the board's Epoch (can be 1970 or 2000). 
