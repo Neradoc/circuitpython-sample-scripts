@@ -2,6 +2,8 @@
 
 Circuitpython enables communication with the host computer it is connected to via a USB serial port. These examples show how to do it in different basic scenarios on the Circuitpython side and example host-side scripts using python. You can of course use any programming language on the host side.
 
+There's [a guide using the usb_cdc module](https://learn.adafruit.com/diy-trinkey-no-solder-air-quality-monitor/circuitpython) on Adafruit Learn.
+
 ## The Second Serial Channel
 
 The default serial channel also hosts the REPL, so you can't communicate through it while looking at the REPL, and some characters can interrupt the code (ctrl-C) so it's not suited for binary data.
