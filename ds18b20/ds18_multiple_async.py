@@ -7,7 +7,7 @@ from adafruit_ds18x20 import DS18X20
 ow_bus = OneWireBus(board.GP2)
 # Scan for sensors and grab them all
 ds18 = [DS18X20(ow_bus, found) for found in ow_bus.scan()]
-# 12-bit resolution (default)
+# 10-bit resolution (default 12)
 ds18.resolution = 10
 
 # read (request) the temperature every 5 seconds
