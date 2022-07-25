@@ -62,11 +62,3 @@ while True:
 
         # save the state
         buttons_pressed_past = buttons_pressed
-
-    # no need to sleep if the loop does other time consuming things
-    time.sleep(0.02)
-
-    # x = seesaw.analog_read(2)
-    # y = seesaw.analog_read(3)
-
-    time.sleep(0.02)
