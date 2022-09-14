@@ -70,7 +70,6 @@ if display:
         terminalio.FONT,
         scale=3,
         color=(255, 255, 255),
-        max_glyphs=50,
         anchor_point=(0.5, 0.5),
         anchored_position=(
             display.width // 2,
