@@ -15,7 +15,9 @@ Your time zone has to be set by modifying `TZ_OFFSET` to the appropriate number 
 
 Add your own display initialization code if you have an external display or read the time in the REPL.
 
-Note: ESP32SPI/airlift boards can use `adafruit_ntp`
+Notes:
+- this will be rewritten to use the `adafruit_ntp` library.
+- ESP32SPI/airlift boards can use ESPget_time() ([see these notes](https://github.com/adafruit/Adafruit_CircuitPython_NTP/releases/tag/3.0.0)). (A new example will be added for that)
 
 ## Adafruit.io time service demo (native)
 
