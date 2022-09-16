@@ -7,6 +7,13 @@ import board
 import json
 import time
 import supervisor
+import sys
+
+################################################################
+# select the serial REPL port
+################################################################
+
+serial = sys.stdin
 
 ################################################################
 # init board's LEDs for visual output
@@ -20,13 +27,6 @@ if hasattr(board, "NEOPIXEL"):
     pix.fill((32, 16, 0))
 else:
     print("This board is not equipped with a Neopixel.")
-
-################################################################
-# select the serial REPL port
-################################################################
-
-import sys
-serial = sys.stdin
 
 ################################################################
 # loop-y-loop

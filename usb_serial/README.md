@@ -2,13 +2,15 @@
 
 Circuitpython enables communication with the host computer it is connected to via a USB serial port. These examples show how to do it in different basic scenarios on the Circuitpython side and example host-side scripts using python. You can of course use any programming language on the host side.
 
-There's [a guide using the usb_cdc module](https://learn.adafruit.com/diy-trinkey-no-solder-air-quality-monitor/circuitpython) on Adafruit Learn.
+There's [a guide using the usb_cdc module](https://learn.adafruit.com/diy-trinkey-no-solder-air-quality-monitor/circuitpython) on Adafruit Learn. [The documentation of the module](https://docs.circuitpython.org/en/latest/shared-bindings/usb_cdc/index.html#module-usb_cdc) list all the functions avaiilable.
 
 ## The Second Serial Channel
 
 The default serial channel also hosts the REPL, so you can't communicate through it while looking at the REPL, and some characters can interrupt the code (ctrl-C) so it's not suited for binary data.
 
 Since Circuitpython 7, it is possible to enable a second serial channel (some chips might be limited) for binary communication without limitations and without losing the REPL, so you can still see debug prints and errors.
+
+Note that you can use the REPL serial port with `usb_cdc.console`, but that is not available on boards that don't have USB OTG, like the suffixless ESP32 or the ESP32-C3.
 
 Using the data serial channel requires creating a `boot.py` file containing the following code. The file requires a reset to be active after it's created the first time (it runs whe the board boots).
 
@@ -21,7 +23,7 @@ usb_cdc.enable(data=True)
 
 ## The Serial Ports
 
-The serial ports of your boards are available on your computer, depending on the operating system, `COM*` on Windows, `/dev/tty.usbmodem*` on MacOS, `/dev/ttyACM0*` on linux.
+The serial ports of your boards are available on your computer, depending on the operating system, for example `COM*` on Windows, `/dev/cu.usbmodem*` on MacOS, `/dev/ttyACM0*` on linux.
 
 To help find the serial ports (REPL or data) on the host side, the `find_serial_port.py` script lists the ports per board and per type (if present). It requires the `adafruit_board_toolkit` module.
 ```
@@ -34,7 +36,11 @@ I also developped a command line python tool to help gather information on the c
 
 ## The Example Scripts
 
+These scripts use a loop in Circuitpython ot communicate with the host computer without blocking. That means that you can run some other code in the same loop, that doesn't have to wait until it receives a message from the host.
+
 Some parts use the json library, not always available on small SAMD21 (M0) boards, due to lack of space, but they can still be used as templates to insert your own code instead.
+
+These scripts use `readline()`, assuming that the host always sends entire lines ending in a return character. Of course you don't have to do that and can read N bytes at a time, blocking or not.
 
 Each example has 3 files.
 
@@ -76,7 +82,7 @@ Bidirectional serial communication.
 
 This shows a two-way communication using JSON data between the board and the host computer. The computer code uses the `asyncio` module for asynchronous execution and prompts the user for a color by name (list in the code) or `(r,g,b)` values and sends it to the board, which will display the color on it's built-in neopixel. The keyword `blink` will make the on-board monochrome LED (if any) blink once.
 
-The board sends button presses that the host prints out. It makes a best effort to detect an existing built-in button. For example the A button on the Circuit Playground boards.
+The board sends button presses that the host prints out. It makes a best effort to detect an existing built-in button. For example the A button on the Circuit Playground boards, or the boot button on ESP boards.
 
 The board is expected to have a built-in neopixel. If it doesn't, replace it with external neopixels, a dotstar, a screen, etc. It might require to install the relevant libraires (`neopixel`, `adafruit_dotstar`, etc.) from the library bundle.
 

@@ -59,6 +59,8 @@ BUTTONS_CANDIDATES = [
     "BUTTON_UP",
     "BUTTON1",
     "BUTTON_1",
+    "BOOT",
+    "BOOT0",
 ]
 for btn_pin in BUTTONS_CANDIDATES:
     if hasattr(board, btn_pin):
@@ -106,7 +108,7 @@ while True:
         if len(data_in) > 0:
             try:
                 data = json.loads(data_in)
-            except:
+            except ValueError:
                 data = {"raw": data_in.decode()}
 
         # interpret

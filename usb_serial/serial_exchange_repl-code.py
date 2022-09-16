@@ -10,6 +10,13 @@ import digitalio
 import json
 import time
 import supervisor
+import sys
+
+################################################################
+# select the serial REPL port
+################################################################
+
+serial = sys.stdin
 
 ################################################################
 # init board's LEDs for visual output
@@ -51,6 +58,8 @@ BUTTONS_CANDIDATES = [
     "BUTTON_UP",
     "BUTTON1",
     "BUTTON_1",
+    "BOOT",
+    "BOOT0",
 ]
 for btn_pin in BUTTONS_CANDIDATES:
     if hasattr(board, btn_pin):
@@ -90,15 +99,15 @@ while True:
 
     # read the REPL serial line by line when there's data
     if supervisor.runtime.serial_bytes_available:
-        data_in = input()
+        data_in = serial.readline()
 
         # try to convert the data to a dict (with JSON)
         data = None
         if len(data_in) > 0:
             try:
                 data = json.loads(data_in)
-            except:
-                data = {"raw": data_in.decode()}
+            except ValueError:
+                data = {"raw": data_in}
 
         # interpret
         if isinstance(data, dict):

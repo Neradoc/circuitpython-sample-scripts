@@ -17,6 +17,12 @@ import time
 import usb_cdc
 
 ################################################################
+# select the serial Data port
+################################################################
+
+serial = usb_cdc.data
+
+################################################################
 # init board's LEDs for visual output
 # replace with your own pins and stuff
 ################################################################
@@ -28,12 +34,6 @@ if hasattr(board, "NEOPIXEL"):
     pix.fill((32, 16, 0))
 else:
     print("This board is not equipped with a Neopixel.")
-
-################################################################
-# select the serial Data port
-################################################################
-
-serial = usb_cdc.data
 
 ################################################################
 # loop-y-loop
