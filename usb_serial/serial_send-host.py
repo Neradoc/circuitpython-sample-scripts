@@ -37,4 +37,4 @@ while True:
         channel.write(json.dumps({"color": color}).encode())
         channel.write(b"\r\n")
 
-        time.sleep(0.2)
+        time.sleep(0.02)
