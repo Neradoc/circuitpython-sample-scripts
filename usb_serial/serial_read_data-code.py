@@ -26,7 +26,7 @@ def generate_some_data():
     """
     try:  # CPU temperature
         return microcontroller.cpu.temperature
-    except:
+    except Exception:
         pass
     # dummy data if temperature not available
     past_temp = past_temp + random.random() - 0.5
@@ -39,7 +39,7 @@ while True:
     temperature_str = f"({temperature})\r\n".encode()
     # prints with () on a solo line to satisfy the Mu grapher
     usb_cdc.data.write(temperature_str)
-    # also print to the REPL channel for debug purposes
-    print(temperature_str)
+    # optionally print to the REPL channel for debug purposes
+    # print("DEBUG - sending:", temperature_str)
     # change the sleep time to match your needs
     time.sleep(1)

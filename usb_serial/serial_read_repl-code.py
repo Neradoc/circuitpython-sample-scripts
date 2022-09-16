@@ -16,7 +16,7 @@ def generate_some_data():
     """
     try:  # CPU temperature
         return microcontroller.cpu.temperature
-    except:
+    except Exception:
         pass
     # dummy data if temperature not available
     past_temp = past_temp + random.random() - 0.5
