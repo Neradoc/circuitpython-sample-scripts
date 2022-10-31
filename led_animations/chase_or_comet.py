@@ -32,7 +32,7 @@ while True:
 	# lookup buttons to switch between animations
 	if not button.value:
 		animations.next()
-		# wait for button release (kind of deounce)
+		# wait for button release (kind of debounce)
 		while not button.value:
 			time.sleep(0.01)
 	# for slow animations, sleep a bit, but not too long to read buttons
