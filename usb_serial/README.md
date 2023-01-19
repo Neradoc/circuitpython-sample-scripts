@@ -2,7 +2,11 @@
 
 Circuitpython enables communication with the host computer it is connected to via a USB serial port. These examples show how to do it in different basic scenarios on the Circuitpython side and example host-side scripts using python. You can of course use any programming language on the host side.
 
-There's [a guide using the usb_cdc module](https://learn.adafruit.com/diy-trinkey-no-solder-air-quality-monitor/circuitpython) on Adafruit Learn. [The documentation of the module](https://docs.circuitpython.org/en/latest/shared-bindings/usb_cdc/index.html#module-usb_cdc) list all the functions avaiilable.
+
+- [The documentation of the module](https://docs.circuitpython.org/en/latest/shared-bindings/usb_cdc/index.html#module-usb_cdc) list all the functions available.
+- [This guide uses the usb_cdc module to send sensor data to the PC](https://learn.adafruit.com/diy-trinkey-no-solder-air-quality-monitor/circuitpython).
+- [Another guide uses serial to communicate "remote procedure calls"](https://learn.adafruit.com/macropad-remote-procedure-calls-over-usb-to-control-home-assistant).
+
 
 ## The Second Serial Channel
 

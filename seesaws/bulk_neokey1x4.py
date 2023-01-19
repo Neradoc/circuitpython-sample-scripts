@@ -28,7 +28,7 @@ buttons_pressed_past = button_mask
 
 while True:
     # if the interrupt pin is set (to LOW)
-        if not interrupt.value:
+    if not interrupt.value:
 
         # get the bitmask of the buttons state
         # this resets the interrupt pin (to HIGH)
