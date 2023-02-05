@@ -40,13 +40,15 @@ while not esp.is_connected:
 
 def try_set_time(esp, tz_offset=0):
     # get_time will raise ValueError if the time isn't available yet.
-    now = None
     try:
-        now_utc = time.localtime(esp.get_time()[0] + tz_offset)
+        now = time.localtime(esp.get_time()[0] + tz_offset)
     except OSError:
         return False
     rtc.RTC().datetime = now
     return True
+
+while not try_set_time(esp, TZ_OFFSET):
+    time.sleep(0.01)
 
 #######################################################################
 # Set the time, waiting until it's available
