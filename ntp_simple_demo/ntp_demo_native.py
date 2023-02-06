@@ -64,6 +64,7 @@ else:
     # insert external display init
 
 if display:
+    display.auto_refresh = False
     group = displayio.Group()
     display.show(group)
     text_area = label.Label(
@@ -78,14 +79,19 @@ if display:
         text="Hello",
     )
     group.append(text_area)
+    display.refresh()
 
+previous_clock = ""
 
 while True:
     now = time.localtime()
     clock = "{hour:02d}:{min:02d}:{seconds:02d}".format(
         hour=now.tm_hour, min=now.tm_min, seconds=now.tm_sec
     )
-    print(clock)
-    if display:
-        text_area.text = clock
+    if clock != previous_clock:
+        print(clock)
+        if display:
+            text_area.text = clock
+            display.refresh()
+        previous_clock = clock
     time.sleep(0.2)
